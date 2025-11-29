@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">Gaming News</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <h1>🎮 Gaming News</h1>
+    <nav>
+        <a th:href="@{/}">Inicio</a>
+        <a th:href="@{/formulario}">Publicar</a>
+        <a th:href="@{/login}">Login</a>
+    </nav>
+</header>
+
+<main>
+    <section th:replace="${contenido}"></section>
+</main>
+
+<footer>
+    <p>© 2025 Gaming News - Proyecto Spring Boot</p>
+</footer>
+</body>
+</html>

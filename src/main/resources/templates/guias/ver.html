@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/base}">
+<head>
+    <title th:text="${guia.titulo}"></title>
+</head>
+<body>
+    <div layout:fragment="content">
+    <div class="container-centered mt-4">
+            <div th:if="${mensaje}" class="alert" th:classappend="${'alert-' + tipo}" role="alert">
+                <span th:text="${mensaje}"></span>
+            </div>
+
+            <div class="row">
+                <!-- Contenido principal -->
+                <div class="col-md-8">
+                    <h1 th:text="${guia.titulo}" class="mb-3"></h1>
+                    
+                    <div class="mb-4">
+                        <img th:if="${guia.imagen}" th:src="${guia.imagen}" class="img-fluid rounded" alt="Imagen de la guía">
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Descripción</h5>
+                        <p th:text="${guia.descripcion}"></p>
+                    </div>
+
+                    <div class="mb-4">
+                        <div th:utext="${guia.contenido}"></div>
+                    </div>
+
+                    <!-- Archivos adjuntos -->
+                    <div class="mb-4" th:if="${!#lists.isEmpty(guia.archivos)}">
+                        <h5>Archivos adjuntos</h5>
+                        <div class="list-group">
+                            <a th:each="archivo : ${guia.archivos}" 
+                               th:href="${archivo.url}"
+                               class="list-group-item list-group-item-action">
+                                <i class="fas fa-file me-2"></i>
+                                <span th:text="${archivo.nombre}"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Comentarios -->
+                    <div class="mb-4">
+                        <h5>Comentarios</h5>
+                        
+                        <!-- Formulario de comentario -->
+                        <form th:if="${#authorization.expression('isAuthenticated()')}"
+                              th:action="@{/guias/{id}/comentarios(id=${guia.id})}"
+                              method="post"
+                              class="mb-4">
+                            <div class="mb-3">
+                                <textarea class="form-control" name="contenido" rows="3" 
+                                          placeholder="Escribe un comentario..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Comentar</button>
+                        </form>
+
+                        <!-- Lista de comentarios -->
+                        <div class="list-group">
+                            <div th:each="comentario : ${guia.comentarios}" 
+                                 class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1" th:text="${comentario.autor.nombre}"></h6>
+                                    <small th:text="${#temporals.format(comentario.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></small>
+                                </div>
+                                <p class="mb-1" th:text="${comentario.contenido}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Información</h5>
+                            <p class="card-text">
+                                <strong>Autor:</strong> <span th:text="${guia.autor.nombre}"></span><br>
+                                <strong>Juego:</strong> <span th:text="${guia.juego.nombre}"></span><br>
+                                <strong>Fecha:</strong> <span th:text="${#temporals.format(guia.fechaCreacion, 'dd/MM/yyyy')}"></span>
+                            </p>
+
+                            <!-- Botones de acción -->
+                            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') or #authentication.principal.id == guia.autor.id}">
+                                <a th:href="@{/guias/{id}/editar(id=${guia.id})}" 
+                                   class="btn btn-warning mb-2 w-100">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                                <form th:action="@{/guias/{id}/eliminar(id=${guia.id})}" 
+                                      method="post" 
+                                      onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta guía?');">
+                                    <button type="submit" class="btn btn-danger w-100">
+                                        <i class="fas fa-trash"></i> Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

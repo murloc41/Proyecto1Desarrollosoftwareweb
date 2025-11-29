@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}">
+<head>
+    <title>Registro - Compendium</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4">Crear Nueva Cuenta</h2>
+                        
+                        <form th:action="@{/registro}" method="post" th:object="${usuario}" novalidate>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="username" class="form-label">Nombre de Usuario</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                        <input type="text" class="form-control" id="username" 
+                                               th:field="*{username}" 
+                                               required minlength="3" maxlength="20"
+                                               pattern="[a-zA-Z0-9_]+"
+                                               placeholder="usuario123">
+                                    </div>
+                                    <div class="form-text">Solo letras, números y guiones bajos (3-20 caracteres)</div>
+                                    <div class="form-text text-danger" th:if="${#fields.hasErrors('username')}" 
+                                         th:errors="*{username}">Error</div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-envelope"></i>
+                                        </span>
+                                        <input type="email" class="form-control" id="email" 
+                                               th:field="*{email}" 
+                                               required
+                                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                               placeholder="usuario@ejemplo.com">
+                                    </div>
+                                    <div class="form-text">Ingresa un email válido</div>
+                                    <div class="form-text text-danger" th:if="${#fields.hasErrors('email')}" 
+                                         th:errors="*{email}">Error</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="password" class="form-label">Contraseña</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-lock"></i>
+                                        </span>
+                                        <input type="password" class="form-control" id="password" 
+                                               th:field="*{password}" 
+                                               required minlength="6" maxlength="100"
+                                               placeholder="Mínimo 6 caracteres">
+                                    </div>
+                                    <div class="form-text">Mínimo 6 caracteres</div>
+                                    <div class="form-text text-danger" th:if="${#fields.hasErrors('password')}" 
+                                         th:errors="*{password}">Error</div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-lock"></i>
+                                        </span>
+                                        <input type="password" class="form-control" id="confirmPassword" 
+                                               name="confirmPassword" 
+                                               required minlength="6"
+                                               placeholder="Repite tu contraseña">
+                                    </div>
+                                    <div class="form-text">Debe coincidir con la contraseña</div>
+                                    <div class="invalid-feedback" id="passwordMismatch">
+                                        Las contraseñas no coinciden
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    Acepto los <a href="#" class="text-primary">términos y condiciones</a>
+                                </label>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                                                <button type="submit" class="btn btn-primary" id="btn-registrar">
+                                    <i class="fas fa-user-plus"></i> Crear Cuenta
+                                </button>
+                            </div>
+                        </form>
+                                                <script>
+                                                    (function(){
+                                                        const form = document.querySelector('form');
+                                                        const pass = document.getElementById('password');
+                                                        const confirm = document.getElementById('confirmPassword');
+                                                        form.addEventListener('submit', function(e){
+                                                            if(pass.value !== confirm.value){
+                                                                e.preventDefault();
+                                                                confirm.setCustomValidity('Las contraseñas no coinciden');
+                                                                confirm.reportValidity();
+                                                            } else {
+                                                                confirm.setCustomValidity('');
+                                                            }
+                                                        });
+                                                    })();
+                                                </script>
+                        
+                        <div class="mt-4 text-center">
+                            <p>¿Ya tienes cuenta? 
+                                <a th:href="@{/login}" class="text-primary">Inicia sesión aquí</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

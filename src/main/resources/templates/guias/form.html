@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}">
+<head>
+    <title>Nueva Guía</title>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container-centered mt-4">
+            <div class="form-card">
+                <h2 th:text="${guia.id == null ? 'Nueva Guía' : 'Editar Guía'}"></h2>
+
+                <div th:if="${mensaje}" class="alert" th:classappend="${'alert-' + tipo}" role="alert">
+                    <span th:text="${mensaje}"></span>
+                </div>
+
+                <form th:action="@{${guia.id == null ? '/guias/guardar' : '/guias/' + guia.id + '/editar'}}"
+                      method="post" 
+                      enctype="multipart/form-data" 
+                      th:object="${guia}">
+                
+                <div class="mb-3">
+                    <label for="titulo" class="form-label">Título</label>
+                    <input type="text" class="form-control" id="titulo" th:field="*{titulo}" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="juego" class="form-label">Juego</label>
+                    <select class="form-select" id="juego" th:field="*{juego}" required>
+                        <option value="">Selecciona un juego</option>
+                        <option th:each="j : ${juegos}" 
+                                th:value="${j.id}" 
+                                th:text="${j.nombre}"></option>
+                    </select>
+                    <div class="text-danger" th:if="${#fields.hasErrors('juego')}" th:errors="*{juego}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="descripcion" th:field="*{descripcion}" rows="3" required></textarea>
+                    <div class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="contenido" class="form-label">Contenido</label>
+                    <div id="editor" style="height: 300px;"></div>
+                    <input type="hidden" id="contenido" name="contenido" th:field="*{contenido}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('contenido')}" th:errors="*{contenido}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="imagen" class="form-label">Imagen de portada</label>
+                    <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+                    <div th:if="${guia.imagen}" class="mt-2">
+                        <img th:src="${guia.imagen}" alt="Imagen actual" style="max-height: 200px;">
+                        <p class="text-muted">Deja vacío para mantener la imagen actual</p>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="archivos" class="form-label">Archivos adjuntos</label>
+                    <input type="file" class="form-control" id="archivos" name="archivos" multiple>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a th:href="@{/guias}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+    <th:block layout:fragment="scripts">
+        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+        <script th:inline="javascript">
+            var quill = new Quill('#editor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        ['blockquote', 'code-block'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        [{ 'script': 'sub'}, { 'script': 'super' }],
+                        [{ 'color': [] }, { 'background': [] }],
+                        ['link', 'image'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            // Set initial content if editing
+            var contenido = /*[[${guia.contenido}]]*/ '';
+            if (contenido) {
+                quill.root.innerHTML = contenido;
+            }
+
+            // Update hidden input before form submission
+            document.querySelector('form').onsubmit = function() {
+                var contenido = document.querySelector('#contenido');
+                contenido.value = quill.root.innerHTML;
+            };
+        </script>
+    </th:block>
+</body>
+</html>
+                document.querySelector('#contenido').value = quill.root.innerHTML;
+                return true;
+            };
+        </script>
+    </th:block>
+</body>
+</html>

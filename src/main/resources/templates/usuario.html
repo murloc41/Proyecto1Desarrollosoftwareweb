@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Usuario</title>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido, usuario 👋</h1>
+        <nav>
+            <a th:href="@{/}">Inicio</a> |
+            <a th:href="@{/lista}">Lista</a> |
+            <a th:href="@{/formulario}">Formulario</a> |
+            <a th:href="@{/login}">Cerrar sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Tu panel de usuario</h2>
+        <p>Puedes ver tus guías, builds y novedades personalizadas.</p>
+    </main>
+</body>
+</html>

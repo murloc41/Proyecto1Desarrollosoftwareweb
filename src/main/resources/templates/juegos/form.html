@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}">
+<head>
+    <title th:text="${juego.id == null ? 'Nuevo Juego' : 'Editar Juego'}">Gestión de Juego</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 th:text="${juego.id == null ? 'Nuevo Juego' : 'Editar Juego'}">Gestión de Juego</h4>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{${juego.id == null ? '/juegos/guardar' : '/juegos/editar/' + juego.id}}"
+                                  method="post"
+                                  th:object="${juego}">
+                                
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre del Juego</label>
+                                    <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="descripcion" class="form-label">Descripción</label>
+                                    <textarea class="form-control" id="descripcion" th:field="*{descripcion}" rows="3"></textarea>
+                                    <div class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="genero" class="form-label">Género</label>
+                                        <select class="form-select" id="genero" th:field="*{genero}" required>
+                                            <option value="">Selecciona un género</option>
+                                            <option value="ACCION">Acción</option>
+                                            <option value="AVENTURA">Aventura</option>
+                                            <option value="ROL">Rol</option>
+                                            <option value="ESTRATEGIA">Estrategia</option>
+                                            <option value="DEPORTES">Deportes</option>
+                                            <option value="SIMULACION">Simulación</option>
+                                            <option value="PUZZLE">Puzzle</option>
+                                            <option value="PLATAFORMAS">Plataformas</option>
+                                            <option value="SHOOTER">Shooter</option>
+                                            <option value="LUCHA">Lucha</option>
+                                            <option value="SURVIVAL">Survival</option>
+                                            <option value="MMORPG">MMORPG</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="plataforma" class="form-label">Plataforma</label>
+                                        <select class="form-select" id="plataforma" th:field="*{plataforma}" required>
+                                            <option value="">Selecciona una plataforma</option>
+                                            <option value="PC">PC</option>
+                                            <option value="PS4">PlayStation 4</option>
+                                            <option value="PS5">PlayStation 5</option>
+                                            <option value="XBOX_ONE">Xbox One</option>
+                                            <option value="XBOX_SERIES">Xbox Series X|S</option>
+                                            <option value="SWITCH">Nintendo Switch</option>
+                                            <option value="MOBILE">Mobile</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="imagen" class="form-label">Imagen del Juego</label>
+                                    <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+                                    <div th:if="${juego.imagen}" class="mt-2">
+                                        <img th:src="${juego.imagen}" alt="Imagen actual" class="img-thumbnail" style="max-height: 200px;">
+                                        <p class="text-muted">Deja vacío para mantener la imagen actual</p>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <a th:href="@{/juegos}" class="btn btn-secondary">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

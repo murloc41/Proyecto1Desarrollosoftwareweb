@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}">
+<head>
+    <title>Guías</title>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container-centered mt-4">
+            <div class="row mb-4">
+                <div class="col">
+                    <h2>Lista de Guías</h2>
+                </div>
+                <div class="col text-end">
+                    <a th:href="@{/guias/nueva}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Nueva Guía
+                    </a>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col">
+                    <form th:action="@{/guias}" method="get" class="d-flex">
+                        <input type="text" name="buscar" class="form-control me-2" 
+                               placeholder="Buscar guías..." th:value="${buscar}">
+                        <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                    </form>
+                </div>
+            </div>
+
+            <div th:if="${mensaje}" class="alert" th:classappend="${'alert-' + tipo}" role="alert">
+                <span th:text="${mensaje}"></span>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <!-- Guías dinámicas desde BD -->
+                <div class="col" th:each="guia : ${guias}">
+                    <div class="card h-100 game-card">
+                        <img th:if="${guia.imagen}" th:src="${guia.imagen}" class="card-img-top" 
+                             style="height: 200px; object-fit: cover;" alt="Imagen de la guía">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${guia.titulo}"></h5>
+                            <p class="card-text" th:text="${#strings.abbreviate(guia.descripcion, 150)}"></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted" th:text="${'Por ' + guia.autor.nombre}"></small>
+                                <a th:href="@{/guias/{id}(id=${guia.id})}" class="btn btn-primary">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guías de ejemplo (si no hay guías en BD) -->
+                <div class="col" th:if="${guias == null or guias.isEmpty()}">
+                    <div class="card h-100 game-card shadow-sm">
+                        <img src="/images/elden-ring.jpg" class="card-img-top" 
+                             style="height: 200px; object-fit: cover;" alt="Guía Elden Ring">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Guía Completa de Elden Ring</h5>
+                            <p class="card-text flex-grow-1">
+                                Descubre todos los secretos de las Tierras Intermedias. Builds, jefes, 
+                                zonas ocultas y estrategias para dominar este épico RPG.
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-danger">Elden Ring</span>
+                                <small class="text-muted"><i class="far fa-clock"></i> 15 min lectura</small>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Por Admin</small>
+                                <a href="#" class="btn btn-sm btn-primary">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col" th:if="${guias == null or guias.isEmpty()}">
+                    <div class="card h-100 game-card shadow-sm">
+                        <img src="/images/monster-hunter-rise.jpg" class="card-img-top" 
+                             style="height: 200px; object-fit: cover;" alt="Guía Monster Hunter">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Mejores Builds - Monster Hunter Rise</h5>
+                            <p class="card-text flex-grow-1">
+                                Arma y armadura óptimas para cada tipo de caza. Sets de habilidades, 
+                                decoraciones y estrategias contra los monstruos más difíciles.
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-success">Monster Hunter</span>
+                                <small class="text-muted"><i class="far fa-clock"></i> 20 min lectura</small>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Por GameMaster</small>
+                                <a href="#" class="btn btn-sm btn-primary">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col" th:if="${guias == null or guias.isEmpty()}">
+                    <div class="card h-100 game-card shadow-sm">
+                        <img src="/images/zelda-totk.jpg" class="card-img-top" 
+                             style="height: 200px; object-fit: cover; object-position: center 30%;" alt="Guía Zelda">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Santuarios y Semillas Korok - Zelda TOTK</h5>
+                            <p class="card-text flex-grow-1">
+                                Localización de todos los santuarios, semillas Korok y armaduras ocultas. 
+                                Mapas interactivos y guía paso a paso de cada región de Hyrule.
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-warning text-dark">Zelda TOTK</span>
+                                <small class="text-muted"><i class="far fa-clock"></i> 25 min lectura</small>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Por HyruleExplorer</small>
+                                <a href="#" class="btn btn-sm btn-primary">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert informativo si no hay guías -->
+            <div th:if="${guias == null or guias.isEmpty()}" class="alert alert-info mt-4" role="alert">
+                <i class="fas fa-info-circle"></i> 
+                <strong>Nota de Demostración:</strong> Estas son guías de ejemplo. 
+            </div>
+
+            <nav th:if="${guias.totalPages > 1}" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${guias.first ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/guias(page=${guias.number - 1}, buscar=${buscar})}">&laquo;</a>
+                    </li>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(0, guias.totalPages - 1)}"
+                        th:classappend="${i == guias.number ? 'active' : ''}">
+                        <a class="page-link" th:href="@{/guias(page=${i}, buscar=${buscar})}" th:text="${i + 1}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${guias.last ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/guias(page=${guias.number + 1}, buscar=${buscar})}">&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</body>
+</html>

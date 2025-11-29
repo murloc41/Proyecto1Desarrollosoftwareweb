@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}">
+<head>
+    <title>Mi Perfil - Compendium</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container-centered mt-4">
+            <div class="row">
+            <!-- Sidebar con información del usuario -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <img th:src="${usuario.avatar ?: 'https://via.placeholder.com/150'}" 
+                                 class="rounded-circle" alt="Avatar" width="150" height="150">
+                        </div>
+                        <h4 class="card-title" th:text="${usuario.username}">Username</h4>
+                        <p class="text-muted" th:text="${usuario.email}">email@example.com</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary">
+                                <i class="fas fa-edit"></i> Editar Perfil
+                            </button>
+                        </div>
+                        <hr>
+                        <div class="row text-center mt-3">
+                            <div class="col">
+                                <h6>Guías</h6>
+                                <h5 th:text="${#lists.size(usuario.guias)}">0</h5>
+                            </div>
+                            <div class="col">
+                                <h6>Comentarios</h6>
+                                <h5 th:text="${#lists.size(usuario.comentarios)}">0</h5>
+                            </div>
+                            <div class="col">
+                                <h6>Valoraciones</h6>
+                                <h5 th:text="${#lists.size(usuario.valoraciones)}">0</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido principal -->
+            <div class="col-md-8">
+                <!-- Tabs de navegación -->
+                <ul class="nav nav-tabs mb-4" id="profileTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="guides-tab" data-bs-toggle="tab" 
+                           href="#guides" role="tab">Mis Guías</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="comments-tab" data-bs-toggle="tab" 
+                           href="#comments" role="tab">Mis Comentarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="favorites-tab" data-bs-toggle="tab" 
+                           href="#favorites" role="tab">Favoritos</a>
+                    </li>
+                </ul>
+
+                <!-- Contenido de los tabs -->
+                <div class="tab-content" id="profileTabContent">
+                    <!-- Mis Guías -->
+                    <div class="tab-pane fade show active" id="guides" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4>Mis Guías</h4>
+                            <a th:href="@{/guias/nueva}" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Nueva Guía
+                            </a>
+                        </div>
+                        <div class="list-group">
+                            <div th:each="guia : ${usuario.guias}" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" th:text="${guia.titulo}">Título de la Guía</h5>
+                                    <small th:text="${#temporals.format(guia.fechaCreacion, 'dd/MM/yyyy')}">
+                                        Fecha
+                                    </small>
+                                </div>
+                                <p class="mb-1" th:text="${guia.descripcion}">Descripción de la guía</p>
+                                <small>
+                                    <i class="fas fa-eye"></i> 
+                                    <span th:text="${guia.vistas}">0</span> vistas
+                                    <i class="fas fa-comment ms-2"></i> 
+                                    <span th:text="${#lists.size(guia.comentarios)}">0</span> comentarios
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mis Comentarios -->
+                    <div class="tab-pane fade" id="comments" role="tabpanel">
+                        <h4 class="mb-3">Mis Comentarios</h4>
+                        <div class="list-group">
+                            <div th:each="comentario : ${usuario.comentarios}" 
+                                 class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">
+                                        En <a th:href="@{'/guias/' + ${comentario.guia.id}}" 
+                                             th:text="${comentario.guia.titulo}">Guía</a>
+                                    </h6>
+                                    <small th:text="${#temporals.format(comentario.fecha, 'dd/MM/yyyy HH:mm')}">
+                                        Fecha
+                                    </small>
+                                </div>
+                                <p class="mb-1" th:text="${comentario.contenido}">Contenido del comentario</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Favoritos -->
+                    <div class="tab-pane fade" id="favorites" role="tabpanel">
+                        <h4 class="mb-3">Mis Favoritos</h4>
+                        <div class="row">
+                            <div th:each="favorito : ${usuario.favoritos}" class="col-md-6 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title" th:text="${favorito.titulo}">
+                                            Título del Favorito
+                                        </h5>
+                                        <p class="card-text" th:text="${favorito.descripcion}">
+                                            Descripción del favorito
+                                        </p>
+                                        <a th:href="@{'/guias/' + ${favorito.id}}" 
+                                           class="btn btn-outline-primary btn-sm">
+                                            Ver Guía
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

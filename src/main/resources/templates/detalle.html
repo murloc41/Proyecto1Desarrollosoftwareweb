@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}">
+<head>
+  <title>Detalle del elemento</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Detalle del Juego</li>
+      </ol>
+    </nav>
+    
+    <div class="card shadow-lg">
+      <div class="card-header bg-primary text-white">
+        <h3 class="mb-0"><i class="fas fa-info-circle"></i> Detalles del Elemento</h3>
+      </div>
+      
+      <!-- Elden Ring (ID = 1) -->
+      <div class="row g-0" th:if="${id == null or id == 1}">
+        <div class="col-md-4">
+          <img src="/images/elden-ring.jpg" 
+               class="img-fluid rounded-start" 
+               style="height: 100%; object-fit: cover;"
+               alt="Elden Ring">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h2 class="card-title mb-3">
+              <i class="fas fa-gamepad text-primary"></i> Elden Ring
+            </h2>
+            
+            <div class="mb-3">
+              <h5>Descripción:</h5>
+              <p class="card-text">
+                Un RPG de acción épico ambientado en un vasto mundo interconectado. 
+                Explora las Tierras Intermedias, enfrenta desafíos intensos y descubre 
+                una narrativa profunda creada por FromSoftware y George R.R. Martin.
+              </p>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h5>Género:</h5>
+                <p><span class="badge bg-danger fs-6">Acción</span></p>
+              </div>
+              <div class="col-md-6">
+                <h5>Plataforma:</h5>
+                <p><span class="badge bg-secondary fs-6">PC / PS5 / Xbox</span></p>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <h5>Características:</h5>
+              <ul>
+                <li>Mundo abierto expansivo con mazmorras interconectadas</li>
+                <li>Combate desafiante estilo Souls</li>
+                <li>Multijugador cooperativo y PvP</li>
+                <li>Personalización profunda de personaje y builds</li>
+              </ul>
+            </div>
+            
+            <div class="mb-3">
+              <h5>Información adicional:</h5>
+              <p class="text-muted">
+                <i class="fas fa-calendar"></i> Fecha de lanzamiento: Febrero 2022<br>
+                <i class="fas fa-eye"></i> Popularidad: 1,234 jugadores activos<br>
+                <i class="fas fa-star text-warning"></i> Rating: 4.5/5.0
+              </p>
+            </div>
+            
+            <hr>
+            
+            <div class="d-flex gap-2">
+              <a href="/" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver al Listado
+              </a>
+              <a th:href="@{/editar/1}" class="btn btn-warning">
+                <i class="fas fa-edit"></i> Editar
+              </a>
+              <a th:href="@{/eliminar/1}" class="btn btn-danger"
+                 onclick="return confirm('¿Está seguro de eliminar este elemento?\n\nEsta acción no se puede deshacer.');">
+                <i class="fas fa-trash"></i> Eliminar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monster Hunter Rise (ID = 2) -->
+      <div class="row g-0" th:if="${id == 2}">
+        <div class="col-md-4">
+          <img src="/images/monster-hunter-rise.jpg" 
+               class="img-fluid rounded-start" 
+               style="height: 100%; object-fit: cover;"
+               alt="Monster Hunter Rise">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h2 class="card-title mb-3">
+              <i class="fas fa-gamepad text-success"></i> Monster Hunter Rise
+            </h2>
+            
+            <div class="mb-3">
+              <h5>Descripción:</h5>
+              <p class="card-text">
+                Caza criaturas épicas en entornos japoneses inspirados. 
+                Nueva mecánica Wirebug para movilidad vertical, colaboración multijugador 
+                y monstruos únicos. Incluye la expansión Sunbreak con nuevos desafíos.
+              </p>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h5>Género:</h5>
+                <p><span class="badge bg-success fs-6">RPG de Acción</span></p>
+              </div>
+              <div class="col-md-6">
+                <h5>Plataforma:</h5>
+                <p><span class="badge bg-secondary fs-6">Switch / PC</span></p>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <h5>Características:</h5>
+              <ul>
+                <li>Sistema de combate dinámico con 14 tipos de armas</li>
+                <li>Wirebug para acrobacias y ataques especiales</li>
+                <li>Modo multijugador hasta 4 jugadores</li>
+                <li>Monstruos icónicos y nuevos desafíos</li>
+              </ul>
+            </div>
+            
+            <div class="mb-3">
+              <h5>Información adicional:</h5>
+              <p class="text-muted">
+                <i class="fas fa-calendar"></i> Fecha de lanzamiento: Marzo 2021<br>
+                <i class="fas fa-eye"></i> Popularidad: 856 cazadores activos<br>
+                <i class="fas fa-star text-warning"></i> Rating: 4.0/5.0
+              </p>
+            </div>
+            
+            <hr>
+            
+            <div class="d-flex gap-2">
+              <a href="/" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver al Listado
+              </a>
+              <a th:href="@{/editar/2}" class="btn btn-warning">
+                <i class="fas fa-edit"></i> Editar
+              </a>
+              <a th:href="@{/eliminar/2}" class="btn btn-danger"
+                 onclick="return confirm('¿Está seguro de eliminar este elemento?\n\nEsta acción no se puede deshacer.');">
+                <i class="fas fa-trash"></i> Eliminar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zelda TOTK (ID = 3) -->
+      <div class="row g-0" th:if="${id == 3}">
+        <div class="col-md-4">
+          <img src="/images/zelda-totk.jpg" 
+               class="img-fluid rounded-start" 
+               style="height: 100%; object-fit: cover; object-position: center 30%;"
+               alt="The Legend of Zelda: Tears of the Kingdom">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h2 class="card-title mb-3">
+              <i class="fas fa-gamepad text-warning"></i> The Legend of Zelda: Tears of the Kingdom
+            </h2>
+            
+            <div class="mb-3">
+              <h5>Descripción:</h5>
+              <p class="card-text">
+                Explora los cielos y profundidades de Hyrule en esta secuela épica de Breath of the Wild. 
+                Nuevas habilidades como Fusión y Ultra Mano, construcción de vehículos y máquinas, 
+                y una historia cautivadora que expande el universo de Zelda.
+              </p>
+            </div>
+            
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h5>Género:</h5>
+                <p><span class="badge bg-warning text-dark fs-6">Aventura</span></p>
+              </div>
+              <div class="col-md-6">
+                <h5>Plataforma:</h5>
+                <p><span class="badge bg-secondary fs-6">Nintendo Switch</span></p>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <h5>Características:</h5>
+              <ul>
+                <li>Mundo expansivo: cielos, superficie y profundidades</li>
+                <li>Sistema de construcción con Ultra Mano</li>
+                <li>Habilidades nuevas: Fusión, Volver y Transrecorrido</li>
+                <li>Historia épica secuela de Breath of the Wild</li>
+              </ul>
+            </div>
+            
+            <div class="mb-3">
+              <h5>Información adicional:</h5>
+              <p class="text-muted">
+                <i class="fas fa-calendar"></i> Fecha de lanzamiento: Mayo 2023<br>
+                <i class="fas fa-eye"></i> Popularidad: 2,150 aventureros activos<br>
+                <i class="fas fa-star text-warning"></i> Rating: 5.0/5.0
+              </p>
+            </div>
+            
+            <hr>
+            
+            <div class="d-flex gap-2">
+              <a href="/" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver al Listado
+              </a>
+              <a th:href="@{/editar/3}" class="btn btn-warning">
+                <i class="fas fa-edit"></i> Editar
+              </a>
+              <a th:href="@{/eliminar/3}" class="btn btn-danger"
+                 onclick="return confirm('¿Está seguro de eliminar este elemento?\n\nEsta acción no se puede deshacer.');">
+                <i class="fas fa-trash"></i> Eliminar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

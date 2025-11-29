@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}">
+<head>
+  <title>Crear elemento</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0"><i class="fas fa-plus-circle"></i> Crear Nuevo Elemento</h4>
+            <p class="mb-0 small">Contexto: Gestión de Juegos</p>
+          </div>
+          <div class="card-body">
+            <form action="/guardar" method="post" enctype="multipart/form-data" novalidate>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="nombre" class="form-label">Nombre <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="nombre" name="nombre" 
+                         required minlength="3" maxlength="100"
+                         placeholder="Ej: Elden Ring">
+                  <div class="invalid-feedback">
+                    El nombre debe tener entre 3 y 100 caracteres.
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="genero" class="form-label">Género <span class="text-danger">*</span></label>
+                  <select class="form-select" id="genero" name="genero" required>
+                    <option value="">Selecciona un género</option>
+                    <option value="ACCION">Acción</option>
+                    <option value="AVENTURA">Aventura</option>
+                    <option value="ROL">RPG</option>
+                    <option value="ESTRATEGIA">Estrategia</option>
+                    <option value="SHOOTER">Shooter</option>
+                    <option value="DEPORTES">Deportes</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Debes seleccionar un género.
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="descripcion" name="descripcion" 
+                          rows="4" required minlength="10" maxlength="500"
+                          placeholder="Describe el juego, sus características principales..."></textarea>
+                <div class="form-text">Entre 10 y 500 caracteres</div>
+                <div class="invalid-feedback">
+                  La descripción debe tener entre 10 y 500 caracteres.
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="plataforma" class="form-label">Plataforma <span class="text-danger">*</span></label>
+                  <select class="form-select" id="plataforma" name="plataforma" required>
+                    <option value="">Selecciona una plataforma</option>
+                    <option value="PC">PC</option>
+                    <option value="PS4">PlayStation 4</option>
+                    <option value="PS5">PlayStation 5</option>
+                    <option value="XBOX_ONE">Xbox One</option>
+                    <option value="XBOX_SERIES">Xbox Series X|S</option>
+                    <option value="SWITCH">Nintendo Switch</option>
+                    <option value="MOBILE">Mobile</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Debes seleccionar una plataforma.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="imagen" class="form-label">Imagen (opcional)</label>
+                  <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
+                  <div class="form-text">Formato recomendado: JPG, PNG (máx. 5MB)</div>
+                </div>
+              </div>
+              
+              <hr class="my-4">
+              
+              <div class="text-end">
+                <a href="/" class="btn btn-secondary">
+                  <i class="fas fa-times"></i> Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i> Guardar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

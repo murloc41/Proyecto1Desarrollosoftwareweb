@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}">
+<head>
+    <title>Panel de Administración - Compendium</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container-centered mt-4">
+            <div class="row mb-4">
+            <!-- Estadísticas Generales -->
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h6 class="card-title">Total Usuarios</h6>
+                        <h2 class="card-text" th:text="${stats.totalUsuarios}">0</h2>
+                        <p class="mb-0">
+                            <i class="fas fa-users"></i> Activos hoy: 
+                            <span th:text="${stats.usuariosActivos}">0</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h6 class="card-title">Total Guías</h6>
+                        <h2 class="card-text" th:text="${stats.totalGuias}">0</h2>
+                        <p class="mb-0">
+                            <i class="fas fa-book"></i> Publicadas hoy: 
+                            <span th:text="${stats.guiasHoy}">0</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h6 class="card-title">Total Comentarios</h6>
+                        <h2 class="card-text" th:text="${stats.totalComentarios}">0</h2>
+                        <p class="mb-0">
+                            <i class="fas fa-comments"></i> Nuevos hoy: 
+                            <span th:text="${stats.comentariosHoy}">0</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h6 class="card-title">Reportes Pendientes</h6>
+                        <h2 class="card-text" th:text="${stats.reportesPendientes}">0</h2>
+                        <p class="mb-0">
+                            <i class="fas fa-flag"></i> Urgentes: 
+                            <span th:text="${stats.reportesUrgentes}">0</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Principal -->
+        <div class="row">
+            <!-- Menú lateral -->
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active" data-bs-toggle="list" data-bs-target="#users">
+                        <i class="fas fa-users"></i> Gestión de Usuarios
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="list" data-bs-target="#games">
+                        <i class="fas fa-gamepad"></i> Gestión de Juegos
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="list" data-bs-target="#guides">
+                        <i class="fas fa-book"></i> Gestión de Guías
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="list" data-bs-target="#reports">
+                        <i class="fas fa-flag"></i> Reportes
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="list" data-bs-target="#settings">
+                        <i class="fas fa-cog"></i> Configuración
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contenido del panel -->
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <!-- Gestión de Usuarios -->
+                    <div class="tab-pane fade show active" id="users">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Usuarios Registrados</h5>
+                                <button class="btn btn-primary btn-sm">
+                                    <i class="fas fa-plus"></i> Nuevo Usuario
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Usuario</th>
+                                                <th>Email</th>
+                                                <th>Rol</th>
+                                                <th>Estado</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="user : ${users}">
+                                                <td th:text="${user.username}">username</td>
+                                                <td th:text="${user.email}">email@example.com</td>
+                                                <td>
+                                                    <span th:each="r : ${user.roles}" class="badge bg-primary me-1" th:text="${r.name}">ROL</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge" 
+                                                          th:classappend="${user.activo ? 'bg-success' : 'bg-danger'}"
+                                                          th:text="${user.activo ? 'Activo' : 'Inactivo'}">
+                                                        Estado
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <button class="btn btn-outline-primary">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestión de Juegos -->
+                    <div class="tab-pane fade" id="games">
+                        <!-- Contenido similar para juegos -->
+                    </div>
+
+                    <!-- Gestión de Guías -->
+                    <div class="tab-pane fade" id="guides">
+                        <!-- Contenido similar para guías -->
+                    </div>
+
+                    <!-- Reportes -->
+                    <div class="tab-pane fade" id="reports">
+                        <!-- Contenido de reportes -->
+                    </div>
+
+                    <!-- Configuración -->
+                    <div class="tab-pane fade" id="settings">
+                        <!-- Contenido de configuración -->
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+
+    <!-- Scripts específicos para el panel de administración -->
+    <th:block layout:fragment="scripts">
+        <script>
+            // Aquí irían los scripts específicos del panel de administración
+            $(document).ready(function() {
+                // Inicialización de componentes
+            });
+        </script>
+    </th:block>
+</body>
+</html>
+    </main>
+</body>
+</html>
+

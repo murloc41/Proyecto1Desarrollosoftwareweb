@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}">
+<head>
+    <title>Gestión de Usuarios</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container mt-4">
+            <div class="row mb-3">
+                <div class="col">
+                    <h2>Gestión de Usuarios</h2>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Email</th>
+                                    <th>Roles</th>
+                                    <th>Fecha Registro</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="usuario : ${usuarios}">
+                                    <td th:text="${usuario.id}"></td>
+                                    <td th:text="${usuario.username}"></td>
+                                    <td th:text="${usuario.email}"></td>
+                                    <td>
+                                        <span th:each="rol : ${usuario.roles}" 
+                                              th:text="${rol.name}"
+                                              class="badge bg-primary me-1"></span>
+                                    </td>
+                                    <td th:text="${#temporals.format(usuario.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}" 
+                                               class="btn btn-warning btn-sm">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form th:action="@{/usuarios/eliminar/{id}(id=${usuario.id})}" 
+                                                  method="post" class="d-inline">
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

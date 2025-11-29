@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base}">
+<head>
+    <title>Gestión de Juegos</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="container mt-4">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-0"><i class="fas fa-gamepad"></i> Gestión de Juegos</h3>
+                            <p class="mb-0 small">Panel de Administración - CRUD Completo</p>
+                        </div>
+                        <a class="btn btn-success" th:href="@{/nuevo}">
+                            <i class="fas fa-plus-circle"></i> Crear Nuevo Juego
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Mensajes de feedback -->
+                    <div th:if="${mensaje}" class="alert" th:classappend="${'alert-' + tipo}" role="alert">
+                        <span th:text="${mensaje}"></span>
+                    </div>
+
+                    <!-- Tabla CRUD -->
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped align-middle">
+                            <thead class="table-dark">
+                            <tr>
+                                <th style="width: 5%;">#</th>
+                                <th style="width: 10%;">Imagen</th>
+                                <th style="width: 25%;">Nombre</th>
+                                <th style="width: 15%;">Género</th>
+                                <th style="width: 15%;">Plataforma</th>
+                                <th style="width: 10%;" class="text-center">Rating</th>
+                                <th style="width: 20%;" class="text-center">Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Datos desde BD (cuando esté implementado en U2) -->
+                            <tr th:each="juego : ${juegos}">
+                                <td th:text="${juego.id}"></td>
+                                <td>
+                                    <img th:if="${juego.imagen}" th:src="${juego.imagen}" 
+                                         alt="Imagen del juego" class="rounded" style="max-height: 50px; max-width: 80px; object-fit: cover;">
+                                    <span th:unless="${juego.imagen}" class="text-muted"><i class="fas fa-image"></i> Sin imagen</span>
+                                </td>
+                                <td><strong th:text="${juego.nombre}"></strong></td>
+                                <td><span class="badge bg-secondary" th:text="${juego.genero}"></span></td>
+                                <td><span class="badge bg-info" th:text="${juego.plataforma}"></span></td>
+                                <td class="text-center">
+                                    <span th:text="${juego.rating}"></span>
+                                    <i class="fas fa-star text-warning"></i>
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-sm btn-outline-info" th:href="@{/detalle/{id}(id=${juego.id})}" 
+                                           title="Ver detalles">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-warning" th:href="@{/editar/{id}(id=${juego.id})}" 
+                                           title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-danger" th:href="@{/eliminar/{id}(id=${juego.id})}" 
+                                           onclick="return confirm('¿Está seguro de eliminar este juego?\n\nEsta acción no se puede deshacer.');"
+                                           title="Eliminar">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Datos estáticos para demostración U1 (si no hay juegos en BD) -->
+                            <tr th:if="${juegos == null or juegos.isEmpty()}">
+                                <td>1</td>
+                                <td>
+                                    <img src="/images/elden-ring.jpg" alt="Elden Ring" class="rounded" 
+                                         style="max-height: 50px; max-width: 80px; object-fit: cover;">
+                                </td>
+                                <td><strong>Elden Ring</strong></td>
+                                <td><span class="badge bg-danger">Acción</span></td>
+                                <td><span class="badge bg-secondary">PC / PS5</span></td>
+                                <td class="text-center">4.5 <i class="fas fa-star text-warning"></i></td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-sm btn-outline-info" th:href="@{/detalle/1}">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-warning" th:href="@{/editar/1}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-danger" th:href="@{/eliminar/1}" 
+                                           onclick="return confirm('¿Está seguro de eliminar este juego?\n\nEsta acción no se puede deshacer.');">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${juegos == null or juegos.isEmpty()}">
+                                <td>2</td>
+                                <td>
+                                    <img src="/images/monster-hunter-rise.jpg" alt="Monster Hunter Rise" class="rounded" 
+                                         style="max-height: 50px; max-width: 80px; object-fit: cover;">
+                                </td>
+                                <td><strong>Monster Hunter Rise</strong></td>
+                                <td><span class="badge bg-success">RPG de Acción</span></td>
+                                <td><span class="badge bg-secondary">Switch / PC</span></td>
+                                <td class="text-center">4.0 <i class="fas fa-star text-warning"></i></td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-sm btn-outline-info" th:href="@{/detalle/2}">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-warning" th:href="@{/editar/2}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-danger" th:href="@{/eliminar/2}" 
+                                           onclick="return confirm('¿Está seguro de eliminar este juego?\n\nEsta acción no se puede deshacer.');">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${juegos == null or juegos.isEmpty()}">
+                                <td>3</td>
+                                <td>
+                                    <img src="/images/zelda-totk.jpg" alt="Zelda TOTK" class="rounded" 
+                                         style="max-height: 50px; max-width: 80px; object-fit: cover;">
+                                </td>
+                                <td><strong>The Legend of Zelda: TOTK</strong></td>
+                                <td><span class="badge bg-warning text-dark">Aventura</span></td>
+                                <td><span class="badge bg-secondary">Nintendo Switch</span></td>
+                                <td class="text-center">5.0 <i class="fas fa-star text-warning"></i></td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-sm btn-outline-info" th:href="@{/detalle/3}">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-warning" th:href="@{/editar/3}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-danger" th:href="@{/eliminar/3}" 
+                                           onclick="return confirm('¿Está seguro de eliminar este juego?\n\nEsta acción no se puede deshacer.');">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Nota informativa -->
+                    <div class="alert alert-info mt-3" role="alert">
+                        <i class="fas fa-info-circle"></i> 
+                        <strong>Nota para Evaluación U1:</strong> Esta tabla muestra datos estáticos de demostración. 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
