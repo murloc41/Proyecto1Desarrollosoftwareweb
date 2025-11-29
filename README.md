@@ -1,6 +1,6 @@
 # Compendium - Portal de Guías de Videojuegos
 
-## 📋 Descripción del Proyecto
+##  Descripción del Proyecto
 
 **Compendium** es una plataforma web colaborativa dedicada a la comunidad gamer, donde los usuarios pueden crear, compartir y descubrir contenido de alta calidad sobre sus videojuegos favoritos.
 
@@ -15,34 +15,34 @@ En la actualidad, los jugadores buscan información confiable sobre:
 
 **Compendium** nace como solución para centralizar este contenido, permitiendo que la comunidad cree, valore y mejore colaborativamente las guías, premiando a los creadores más activos y útiles.
 
-## 🎯 Funcionalidades Principales
+##  Funcionalidades Principales
 
 ### Para la Fase 1 (Unidad 1 - Evaluación Actual)
-- ✅ Sistema de autenticación (Login/Registro)
-- ✅ Dashboard principal con navegación intuitiva
-- ✅ Listado de juegos disponibles
-- ✅ Formularios CRUD para gestión de contenido
-- ✅ Diseño responsive con Bootstrap
-- ✅ Validaciones del lado del cliente
+-  Sistema de autenticación (Login/Registro)
+-  Dashboard principal con navegación intuitiva
+-  Listado de juegos disponibles
+-  Formularios CRUD para gestión de contenido
+-  Diseño responsive con Bootstrap
+-  Validaciones del lado del cliente
 
 ### Para Fases Futuras (Unidad 2 en adelante)
-- 🔄 **Sistema de Guías:**
+-  **Sistema de Guías:**
   - Creación con editor de texto enriquecido (Quill)
   - Categorización (Tutorial, Estrategia, Build, Secretos, Logros, Speedrun)
   - Niveles de dificultad (Principiante, Intermedio, Avanzado, Experto)
   - Subida de imágenes y archivos adjuntos
   
-- 🔄 **Sistema de Valoración:**
+-  **Sistema de Valoración:**
   - Rating por estrellas
   - Comentarios y retroalimentación
   - Sistema de votos (útil/no útil)
   
-- 🔄 **Sistema de Roles:**
+-  **Sistema de Roles:**
   - **Usuario Normal:** Solo lectura y comentarios
   - **Autor:** Puede crear y editar sus propias guías
   - **Administrador:** Control total del sistema
   
-- 📅 **Futuras Implementaciones:**
+-  **Futuras Implementaciones:**
   - Sistema de recompensas por actividad
   - Tier Lists interactivas
   - Comunidades por juego
@@ -50,7 +50,7 @@ En la actualidad, los jugadores buscan información confiable sobre:
   - Notificaciones de actualizaciones
   - Búsqueda avanzada y filtros
 
-## 🛠️ Tecnologías Utilizadas
+##  Tecnologías Utilizadas
 
 ### Backend
 - **Spring Boot 3.5.7** - Framework principal
@@ -72,7 +72,7 @@ En la actualidad, los jugadores buscan información confiable sobre:
 - **Spring Boot DevTools** - Desarrollo ágil
 - **Java 17** - Versión del lenguaje
 
-## 📁 Estructura del Proyecto
+##  Estructura del Proyecto
 
 ```
 compendium/
@@ -144,7 +144,7 @@ compendium/
 └── README.md                       # Este archivo
 ```
 
-## 🚀 Instalación y Ejecución
+##  Instalación y Ejecución
 
 ### Requisitos Previos
 - Java 17 o superior
@@ -193,7 +193,7 @@ mvn spring-boot:run
 - Contraseña: `user123`
 - Permisos: Solo lectura
 
-## 📝 Evaluación - Unidad 1 (Fase 1)
+##  Evaluación - Unidad 1 (Fase 1)
 
 ### Cumplimiento de Requisitos
 
@@ -224,14 +224,14 @@ mvn spring-boot:run
 - [x] Métodos retornan solo vistas/redirecciones
 - [x] Sin lógica de negocio (preparado para U2)
 
-## 🎨 Referencias de Diseño
+##  Referencias de Diseño
 
 El diseño de Compendium se inspira en:
 - **Prydwen.gg** - Tier lists claros y organizados
 - **Fextralife** - Wiki detallada con navegación intuitiva
 - **EliteGuias** - Contenido en español accesible
 
-## 📄 Licencia
+##  Licencia
 
 Proyecto académico - Instituto/Universidad
 Asignatura: Desarrollo de Software Web II
